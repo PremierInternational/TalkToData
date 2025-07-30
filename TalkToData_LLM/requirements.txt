@@ -1,3 +1,7 @@
 streamlit
 pandas
-llama-cpp-python==0.2.52
+spacy
+requests
+Pillow
+scikit-learn
+matplotlib
