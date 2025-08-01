@@ -8,22 +8,30 @@ import spacy
 import re
 import requests
 import time          # measure Ollama response time
+from PIL import Image
 from difflib import get_close_matches
 
 # ──────────────────────────────────────────
 #  Initial setup
 # ──────────────────────────────────────────
-nlp = spacy.load("en_core_web_sm")
+#nlp = spacy.load("en_core_web_sm")
 
-st.set_page_config(page_title="NLP Chat + Ollama", layout="wide")
-st.title("🤖 Ask Questions About Your Data (Chat + Ollama)")
+st.set_page_config(page_title="Talk To Your Data", layout="wide")
+try:
+    logo = Image.open("logo.png") 
+    st.image(logo, width=500)
+except FileNotFoundError:
+    st.warning("Logo file not found. Please check the filename and path.")
+#st.image(logo, width=120)
+st.title("🧠 Talk To Your Data")
+st.markdown("#### 🔒 Local LLM – Privacy & Security with Your Data")
 
 uploaded_file = st.file_uploader("Upload your CSV", type=["csv"])
 
 # ──────────────────────────────────────────
 #  Helper: call Ollama
 # ──────────────────────────────────────────
-def query_ollama(prompt, model="phi"):
+def query_ollama(prompt, model="tinyllama"):
     try:
         r = requests.post(
             "http://localhost:11434/api/generate",
